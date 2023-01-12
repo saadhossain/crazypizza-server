@@ -15,7 +15,14 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 const dbConnect = () => {
     //Make a Collection for Pizza's
-    const pizzaCollection = client.db('crazyPizza').collection('pizzas')
+    const products = client.db('crazyPizza').collection('products')
+
+    //Post Data to Server
+    app.post('/addproduct', async (req, res) =>{
+        const product = req.body;
+        const result = await products.insertOne(product)
+        res.send(result)
+    } )
 }
 
 dbConnect()
